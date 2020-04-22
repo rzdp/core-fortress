@@ -1,0 +1,5 @@
+CREATE DATABASE FortressDev;
+CREATE DATABASE FortressQat;
+CREATE DATABASE FortressStage;
+CREATE DATABASE FortressProd;
+
