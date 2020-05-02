@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 public class MemberController {
 
     private final MemberService memberService;
@@ -22,12 +21,12 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/v1/members")
+    @GetMapping("/v1/")
     public List<Member> getMembers() {
         return memberService.getMembers();
     }
 
-    @GetMapping("/v1/members/{bankId}/bank-accounts")
+    @GetMapping("/v1/{bankId}/bank-accounts")
     public MemberDto getMemberBankAccounts(@PathVariable String bankId) {
         return memberService.getMemberBankAccounts(bankId);
     }
