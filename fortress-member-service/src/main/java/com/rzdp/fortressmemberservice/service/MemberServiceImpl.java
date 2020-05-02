@@ -1,5 +1,8 @@
 package com.rzdp.fortressmemberservice.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 import com.rzdp.fortressmemberservice.dto.BankAccountDto;
 import com.rzdp.fortressmemberservice.dto.MemberDto;
 import com.rzdp.fortressmemberservice.entity.Member;
@@ -28,7 +31,23 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+//    @HystrixCommand(commandProperties = {
+//        @HystrixProperty(
+//                name = "execution.isolation.thread.timeoutInMilliseconds",
+//                value = "12000"
+//        )
+//    })
+    @HystrixCommand(
+            commandProperties = {
+                @HystrixProperty(
+                        name = "execution.isolation.thread.timeoutInMilliseconds",
+                        value = "10000"
+                )
+            },
+            fallbackMethod = "getMemberBankAccountsFallback"
+    )
     public MemberDto getMemberBankAccounts(String bankId) {
+        sleep();
         Member member = memberRepository.findByBankId(bankId);
         if (member == null) {
             throw new EntityNotFoundException("Member not found");
@@ -46,5 +65,17 @@ public class MemberServiceImpl implements MemberService {
         memberDto.setActive(member.isActive());
         memberDto.setBankAccounts(bankAccounts);
         return memberDto;
+    }
+
+    private MemberDto getMemberBankAccountsFallback(String bankId) {
+        return new MemberDto();
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(11000);
+        } catch(InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
