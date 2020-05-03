@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
             commandProperties = {
                 @HystrixProperty(
                         name = "execution.isolation.thread.timeoutInMilliseconds",
-                        value = "10000"
+                        value = "60000"
                 )
             },
             fallbackMethod = "getMemberBankAccountsFallback"
@@ -73,7 +73,7 @@ public class MemberServiceImpl implements MemberService {
 
     private void sleep() {
         try {
-            Thread.sleep(11000);
+            Thread.sleep(10000);
         } catch(InterruptedException ex) {
             ex.printStackTrace();
         }

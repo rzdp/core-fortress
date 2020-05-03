@@ -21,13 +21,14 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/v1/")
+    @GetMapping("/v1/lists")
     public List<Member> getMembers() {
         return memberService.getMembers();
     }
 
-    @GetMapping("/v1/{bankId}/bank-accounts")
+    @GetMapping("/v1/bank-accounts/{bankId}")
     public MemberDto getMemberBankAccounts(@PathVariable String bankId) {
         return memberService.getMemberBankAccounts(bankId);
     }
 }
+
