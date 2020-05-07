@@ -5,6 +5,7 @@ import com.rzdp.fortressbankservice.service.BankAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class BankAccountController {
     }
 
     @GetMapping("/v1/bank-accounts/{bankId}")
-    public List<BankAccount> getBankAccounts(@PathVariable String bankId) {
-        return bankAccountService.getBankAccounts(bankId);
+    public List<BankAccount> getBankAccounts(@RequestHeader("x-correlation-id") String correlationId,
+                                             @PathVariable String bankId) {
+        return bankAccountService.getBankAccounts(correlationId, bankId);
     }
 }

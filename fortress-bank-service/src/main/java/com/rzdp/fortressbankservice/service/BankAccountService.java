@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BankAccountService {
 
-    List<BankAccount> getBankAccounts(String bankId);
+    List<BankAccount> getBankAccounts(String correlationId, String bankId);
 }

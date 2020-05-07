@@ -2,11 +2,13 @@ package com.rzdp.fortressmemberservice.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import com.netflix.ribbon.proxy.annotation.Hystrix;
 import com.rzdp.fortressmemberservice.dto.BankAccountDto;
 import com.rzdp.fortressmemberservice.dto.MemberDto;
 import com.rzdp.fortressmemberservice.entity.Member;
+import com.rzdp.fortressmemberservice.filters.UserContext;
 import com.rzdp.fortressmemberservice.repository.MemberRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
 
+    private static final Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
     private final MemberRepository memberRepository;
     private final BankAccountService bankAccountService;
 
@@ -39,21 +42,23 @@ public class MemberServiceImpl implements MemberService {
 //    })
     @HystrixCommand(
             commandProperties = {
-                @HystrixProperty(
-                        name = "execution.isolation.thread.timeoutInMilliseconds",
-                        value = "60000"
-                )
+                    @HystrixProperty(
+                            name = "execution.isolation.thread.timeoutInMilliseconds",
+                            value = "60000"
+                    )
             },
             fallbackMethod = "getMemberBankAccountsFallback"
     )
-    public MemberDto getMemberBankAccounts(String bankId) {
+    public MemberDto getMemberBankAccounts(String correlationId, String bankId) {
         sleep();
+        log.debug("Requesting bank account details for: [{}]", correlationId);
+
         Member member = memberRepository.findByBankId(bankId);
         if (member == null) {
             throw new EntityNotFoundException("Member not found");
         }
         MemberDto memberDto = new MemberDto();
-        List<BankAccountDto> bankAccounts = bankAccountService.getBankAccounts(bankId);
+        List<BankAccountDto> bankAccounts = bankAccountService.getBankAccounts(correlationId, bankId);
         if (bankAccounts.isEmpty()) {
             throw new EntityNotFoundException("Accounts not found");
         }
@@ -67,14 +72,14 @@ public class MemberServiceImpl implements MemberService {
         return memberDto;
     }
 
-    private MemberDto getMemberBankAccountsFallback(String bankId) {
+    private MemberDto getMemberBankAccountsFallback(String correlationId, String bankId) {
         return new MemberDto();
     }
 
     private void sleep() {
         try {
             Thread.sleep(10000);
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
     }

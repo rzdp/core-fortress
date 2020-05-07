@@ -9,5 +9,5 @@ public interface MemberService {
 
     List<Member> getMembers();
 
-    MemberDto getMemberBankAccounts(String bankId);
+    MemberDto getMemberBankAccounts(String correlationId, String bankId);
 }

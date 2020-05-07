@@ -6,6 +6,7 @@ import com.rzdp.fortressmemberservice.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,9 @@ public class MemberController {
     }
 
     @GetMapping("/v1/bank-accounts/{bankId}")
-    public MemberDto getMemberBankAccounts(@PathVariable String bankId) {
-        return memberService.getMemberBankAccounts(bankId);
+    public MemberDto getMemberBankAccounts(@RequestHeader("x-correlation-id") String correlationId,
+                                           @PathVariable String bankId) {
+        return memberService.getMemberBankAccounts(correlationId, bankId);
     }
 }
 
