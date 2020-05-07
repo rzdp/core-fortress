@@ -1,7 +1,9 @@
 # core-fortress
 
-#### Status: Ongoing
+### Status: Ongoing
 
+#### Features
+---
 - Microservice project using Spring, Spring Boot, and Spring Cloud
 - Created Configuration Server using Spring Cloud Config and Git
 - Created Service Discovery Server using Spring Cloud and Netflix's Eureka
