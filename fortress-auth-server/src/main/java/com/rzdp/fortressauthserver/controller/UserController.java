@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    @GetMapping("/users")
+    @GetMapping("/auth/users")
     public Map<String, Object> getUsers(OAuth2Authentication user) {
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("user", user.getUserAuthentication().getPrincipal());
