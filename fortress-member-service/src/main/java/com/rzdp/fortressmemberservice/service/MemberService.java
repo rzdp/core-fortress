@@ -10,4 +10,6 @@ public interface MemberService {
     List<Member> getMembers();
 
     MemberDto getMemberBankAccounts(String correlationId, String bankId);
+
+    void deleteMember(long memberId);
 }

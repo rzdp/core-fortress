@@ -72,6 +72,11 @@ public class MemberServiceImpl implements MemberService {
         return memberDto;
     }
 
+    @Override
+    public void deleteMember(long memberId) {
+        memberRepository.deleteById(memberId);
+    }
+
     private MemberDto getMemberBankAccountsFallback(String correlationId, String bankId) {
         return new MemberDto();
     }
