@@ -25,4 +25,10 @@ public class BankAccountServiceImpl implements BankAccountService {
         log.debug("Getting bank account details for: [{}]", correlationId);
         return bankAccountRepository.findByBankId(bankId);
     }
+
+    @Override
+    public void deleteBankAccounts(String correlationId, String bankId) {
+        log.debug("Deleting bank account details for: [{}]", correlationId);
+        bankAccountRepository.deleteByBankId(bankId);
+    }
 }

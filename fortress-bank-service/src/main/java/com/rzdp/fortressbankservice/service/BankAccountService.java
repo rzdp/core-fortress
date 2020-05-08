@@ -7,4 +7,7 @@ import java.util.List;
 public interface BankAccountService {
 
     List<BankAccount> getBankAccounts(String correlationId, String bankId);
+
+    void deleteBankAccounts(String correlationId, String bankId);
+
 }
