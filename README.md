@@ -24,8 +24,8 @@
 | `fortress-eureka-server`  | 8761     | Fortress' Service Discovery                       |
 | `fortress-gateway`        | 5555     | Fortress' Service or API Gateway                  |
 | `fortress-auth-server`    | 8901     | Fortress' Authentication and Authorization Server |
-| `fortress-bank-service`   | 8080     | Fortress' Bank Accounts Microservice              |
-| `fortress-member-service` | 8090     | Fortress' Member Microservice                     |
+| `fortress-member-service` | 8080     | Fortress' Member Microservice                     |
+| `fortress-bank-service`   | 8090     | Fortress' Bank Accounts Microservice              |
 | `fortress-storage-server` | N/A      | Fortress' Project Storage Folders                 |
 
 ### Technologies
