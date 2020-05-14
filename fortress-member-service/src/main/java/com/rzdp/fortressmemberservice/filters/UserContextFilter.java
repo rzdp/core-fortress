@@ -2,6 +2,7 @@ package com.rzdp.fortressmemberservice.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -22,7 +23,6 @@ public class UserContextFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-
 
         filterChain.doFilter(request, servletResponse);
     }
